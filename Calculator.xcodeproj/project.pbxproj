@@ -33,7 +33,7 @@
 		0AD956EF2DC6914D000D5786 /* Exceptions for "Calculator" folder in "CalculatorTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				App/Calculator.swift,
+				App/Screens/Calculator.swift,
 				App/UI/ActionButton.swift,
 				App/UI/ButtonGrid.swift,
 				App/UI/LabelButton.swift,
@@ -48,7 +48,7 @@
 		0AD956F02DC6914D000D5786 /* Exceptions for "Calculator" folder in "CalculatorUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				App/Calculator.swift,
+				App/Screens/Calculator.swift,
 				App/UI/ActionButton.swift,
 				App/UI/ButtonGrid.swift,
 				App/UI/LabelButton.swift,
