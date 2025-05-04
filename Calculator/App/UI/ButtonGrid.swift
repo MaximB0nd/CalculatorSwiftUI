@@ -23,7 +23,7 @@ struct ButtonGrid: View {
                 
                 expression[expression.count-1].removeLast()
                 
-                if expression[expression.count-1].isEmpty {
+                if expression[expression.count-1].isEmpty || expression[0] == "-" {
                     if expression.count == 1 {
                         expression[0] = "0"
                     }

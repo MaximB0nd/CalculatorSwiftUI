@@ -24,7 +24,18 @@ struct TopTextView: View {
                     HStack {
                         if i % 2 == 0 {
                             
-                            Text(expression[i/2]).multilineTextAlignment(.trailing)
+                            let exp = expression[i/2]
+                            
+                            if exp.contains("-") {
+                                Image(systemName: "minus")
+                                    .multilineTextAlignment(.trailing)
+                                    .foregroundStyle(.white)
+                                    .font(Font.system(size: 60, weight: .medium))
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                            }
+                            
+                            
+                            Text(exp.contains("-") ? String(exp.dropFirst()) : exp).multilineTextAlignment(.trailing)
                                 .foregroundStyle(.white)
                                 .font(Font.system(size: 90, weight: .medium))
                                 .frame(maxWidth: .infinity, alignment: .trailing)
