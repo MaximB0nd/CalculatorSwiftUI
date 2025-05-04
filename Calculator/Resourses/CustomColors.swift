@@ -8,9 +8,6 @@
 import SwiftUI
 
 enum CustomColors: String {
-    case Accent
-    case BgLight
-    case OffButton
     case NumbersButton
     case ActionsButton
     case BackButton

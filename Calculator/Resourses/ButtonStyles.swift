@@ -34,4 +34,22 @@ struct NumberButtonStyle: ButtonStyle {
     }
 }
 
+struct ZeroButtonStyle: ButtonStyle {
+    let color: CustomColors
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(10)
+            .background(configuration.isPressed ? .white : Color(color))
+            .opacity(configuration.isPressed ? 0.9 : 1)
+            .cornerRadius(180)
+            .aspectRatio(2, contentMode: .fit)
+            
+    }
+}
 
+
+
+    
+    

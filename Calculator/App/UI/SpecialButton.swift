@@ -16,13 +16,15 @@ struct SpecialButton: View {
     
     let path: String
     let action: () -> Void
+    let isImage: Bool
     
     var body: some View {
         Button {
             action()
         }
         label: {
-            ButtonLabel(path: path)
+            if isImage { ButtonLabel(path: path) }
+            else { ButtonLabel(symbol: path) }
         }
     }
     
@@ -35,5 +37,17 @@ struct SpecialButton: View {
         self._expression = NumberButtonProperties.expression
         self.path = path
         self.action = action
+        self.isImage = true
+    }
+    
+    init (symbol: String = "", action: @escaping () -> Void,
+          _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>)) {
+        
+        self._actions = NumberButtonProperties.actions
+        self._position = NumberButtonProperties.position
+        self._expression = NumberButtonProperties.expression
+        self.path = symbol
+        self.action = action
+        self.isImage = false
     }
 }

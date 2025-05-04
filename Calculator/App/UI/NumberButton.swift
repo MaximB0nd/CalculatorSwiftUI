@@ -23,7 +23,7 @@ struct NumberButton: View {
             position.scrollTo(edge: .leading)
             if actions.count < expression.count {
                 
-                if expression[expression.count-1].first == "0" || expression[expression.count-1].contains("-0") {
+                if (expression[expression.count-1].first == "0" || expression[expression.count-1].contains("-0")) && !expression[expression.count-1].contains("0.") {
                     expression[expression.count-1] = "\(expression[expression.count-1].contains("-0") ? "-" : "")\(symbol)"
                     return
                 }

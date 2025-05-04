@@ -15,3 +15,7 @@ struct CalculatorApp: App {
         }
     }
 }
+
+#Preview {
+    CalculatorView()
+}

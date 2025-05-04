@@ -26,7 +26,7 @@ struct TopTextView: View {
                             
                             Text(expression[i/2]).multilineTextAlignment(.trailing)
                                 .foregroundStyle(.white)
-                                .font(Font.system(size: 90))
+                                .font(Font.system(size: 90, weight: .medium))
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                                 
                         }
@@ -34,7 +34,7 @@ struct TopTextView: View {
                             Image(systemName: "\(actions[(i-1)/2].rawValue)")
                                 .multilineTextAlignment(.trailing)
                                 .foregroundStyle(.white)
-                                .font(Font.system(size: 55, weight: .bold))
+                                .font(Font.system(size: 60, weight: .medium))
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                                 
                             

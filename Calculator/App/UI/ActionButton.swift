@@ -19,6 +19,9 @@ struct ActionButton: View {
             
             position.scrollTo(edge: .leading)
             if actions.count < expression.count {
+                if expression[expression.count-1].last == "." {
+                    expression[expression.count-1].removeLast()
+                }
                 actions.append(action)
                 return
             }
