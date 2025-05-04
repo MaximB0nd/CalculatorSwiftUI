@@ -13,6 +13,7 @@ struct ButtonGrid: View {
     @Binding var expression: [String]
     @Binding var actions: [Action]
     @Binding var position: ScrollPosition
+    @Binding var mathLogic: MathLogic
     
     var body: some View {
        
@@ -121,12 +122,12 @@ struct ButtonGridPreview: PreviewProvider {
     @State static var position = ScrollPosition(edge: .trailing)
     @State static var actions: [Action] = []
     @State static var expression: [String] = ["0"]
-    
+    @State static var result = MathLogic()
     
     static var previews: some View {
         ZStack {
             Rectangle()
-            ButtonGrid(expression: $expression, actions: $actions, position: $position)
+            ButtonGrid(expression: $expression, actions: $actions, position: $position, mathLogic: $result)
         }.ignoresSafeArea(.all)
     }
 }

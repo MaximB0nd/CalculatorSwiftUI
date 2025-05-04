@@ -34,11 +34,11 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				App/Screens/Calculator.swift,
-				App/UI/ActionButton.swift,
 				App/UI/ButtonGrid.swift,
-				App/UI/LabelButton.swift,
-				App/UI/NumberButton.swift,
-				App/UI/SpecialButton.swift,
+				App/UI/GridButtons/ActionButton.swift,
+				App/UI/GridButtons/LabelButton.swift,
+				App/UI/GridButtons/NumberButton.swift,
+				App/UI/GridButtons/SpecialButton.swift,
 				App/UI/TopTextView.swift,
 				Resourses/ButtonStyles.swift,
 				Resourses/CustomColors.swift,
@@ -49,11 +49,11 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				App/Screens/Calculator.swift,
-				App/UI/ActionButton.swift,
 				App/UI/ButtonGrid.swift,
-				App/UI/LabelButton.swift,
-				App/UI/NumberButton.swift,
-				App/UI/SpecialButton.swift,
+				App/UI/GridButtons/ActionButton.swift,
+				App/UI/GridButtons/LabelButton.swift,
+				App/UI/GridButtons/NumberButton.swift,
+				App/UI/GridButtons/SpecialButton.swift,
 				App/UI/TopTextView.swift,
 				Resourses/ButtonStyles.swift,
 				Resourses/CustomColors.swift,
