@@ -13,10 +13,12 @@ struct ActionButton: View {
     @Binding var expression: [String]
     @Binding var position: ScrollPosition
     @Binding var actions: [Action]
+    @Binding var mathLogic: MathLogic
+    
     
     var body: some View {
         Button {
-            
+            if !mathLogic.result.isEmpty { mathLogic.clear() }
             position.scrollTo(edge: .leading)
             if actions.count < expression.count {
                 if expression[expression.count-1].last == "." {
@@ -34,14 +36,14 @@ struct ActionButton: View {
         }
     }
     
-    init (action: Action, _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>)) {
+    init (action: Action, _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>, MathLogic: Binding<MathLogic>)) {
         
         self._actions = NumberButtonProperties.actions
         self._position = NumberButtonProperties.position
         self._expression = NumberButtonProperties.expression
         
         self.action = action
-        
+        self._mathLogic = NumberButtonProperties.MathLogic
     }
           
 }

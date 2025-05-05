@@ -13,6 +13,8 @@ struct SpecialButton: View {
     @Binding var expression: [String]
     @Binding var position: ScrollPosition
     @Binding var actions: [Action]
+    @Binding var mathLogic: MathLogic
+    
     
     let path: String
     let action: () -> Void
@@ -30,7 +32,7 @@ struct SpecialButton: View {
     
     
     init (path: String = "", action: @escaping () -> Void,
-          _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>)) {
+          _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>, MathLogic: Binding<MathLogic>)) {
         
         self._actions = NumberButtonProperties.actions
         self._position = NumberButtonProperties.position
@@ -38,10 +40,11 @@ struct SpecialButton: View {
         self.path = path
         self.action = action
         self.isImage = true
+        self._mathLogic = NumberButtonProperties.MathLogic
     }
     
     init (symbol: String = "", action: @escaping () -> Void,
-          _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>)) {
+          _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>, MathLogic: Binding<MathLogic>)) {
         
         self._actions = NumberButtonProperties.actions
         self._position = NumberButtonProperties.position
@@ -49,5 +52,6 @@ struct SpecialButton: View {
         self.path = symbol
         self.action = action
         self.isImage = false
+        self._mathLogic = NumberButtonProperties.MathLogic
     }
 }

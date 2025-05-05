@@ -8,15 +8,14 @@
 import Foundation
 
 final class MathLogic {
-    var expression: [String] = ["0"]
+    var expression: [String] = []
     var actions: [Action] = []
-    var result: String = ""
+    public var result: String = ""
     
-    let actionsPririty: [Action: Int] = [
-        .divide: 1,
-        .multiply: 1,
-        .minus: 2,
-        .plus: 2
+    let actionsPririty: [Int: [Action]] = [
+        1: [.percent],
+        2: [.divide, .multiply],
+        3: [.minus, .plus],
     ]
     
     init () {}
@@ -24,6 +23,7 @@ final class MathLogic {
     func clear() {
         expression = ["0"]
         actions.removeAll()
+        result = ""
     }
     
     func reload(expression: [String], actions: [Action]) {
@@ -32,17 +32,21 @@ final class MathLogic {
     }
     
     func calculate() {
-        for i in stride(from: actions.count, to: 0, by: -1) {
-            let action = actions[i]
-            let num2 = expression.remove(at: i)
-            let num1 = expression.remove(at: i)
-            guard let res = getAction(num1, num2, action) else {
-                result = "Error"
-                return
+        for (_, value) in actionsPririty {
+            for i in stride(from: actions.count > 1 ? actions.count - 1 : 0, to: 0, by: -1) {
+                let action = actions[i]
+                if value.contains(action) {
+                    let num2 = expression.remove(at: i)
+                    let num1 = expression[i]
+                    guard let res = getAction(num1, num2, action) else {
+                        result = "Error"
+                        return
+                    }
+                    expression[i] = String(res)
+                }
             }
-            expression[i] = String(res)
+            result = expression[0]
         }
-        result = expression[0]
     }
     
     func getAction(_ num1: String, _ num2: String, _ action: Action) -> Double? {
@@ -60,8 +64,9 @@ final class MathLogic {
                 return nil
             }
                 return num1 / num2
-            default:
-                return nil
+            
+            case .percent:
+                return num1 * num2 / 100
         }
     }
 }

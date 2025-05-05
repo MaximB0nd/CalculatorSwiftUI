@@ -16,6 +16,8 @@ struct TopTextView: View {
     
     var body: some View {
         
+        let isRes = !result.result.isEmpty
+        
         VStack {
             ScrollView (.horizontal, showsIndicators: false) {
                 HStack {
@@ -29,14 +31,15 @@ struct TopTextView: View {
                                     Image(systemName: "minus")
                                         .multilineTextAlignment(.trailing)
                                         .foregroundStyle(.white)
-                                        .font(Font.system(size: 60, weight: .medium))
                                         .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .font(Font.system(size: isRes ? 30 : 70, weight: .medium))
+                                    
                                 }
                                 
                                 
                                 Text(exp.contains("-") ? String(exp.dropFirst()) : exp).multilineTextAlignment(.trailing)
                                     .foregroundStyle(.white)
-                                    .font(Font.system(size: 90, weight: .medium))
+                                    .font(Font.system(size: isRes ? 30 : 90, weight: .medium))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                 
                             }
@@ -44,8 +47,9 @@ struct TopTextView: View {
                                 Image(systemName: "\(actions[(i-1)/2].rawValue)")
                                     .multilineTextAlignment(.trailing)
                                     .foregroundStyle(.white)
-                                    .font(Font.system(size: 60, weight: .medium))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .font(Font.system(size: isRes ? 30 : 70, weight: .medium))
+                                    
                                 
                                 
                             }
@@ -64,17 +68,50 @@ struct TopTextView: View {
             .fixedSize(horizontal: false, vertical: true)
             .scaleEffect(x: -1, y: 1)
             
+            
+            
+            
+            if isRes {
+                ScrollView (.horizontal, showsIndicators: false) {
+                    HStack {
+                        if result.result.contains("-") {
+                            Image(systemName: "minus")
+                                .multilineTextAlignment(.trailing)
+                                .foregroundStyle(.white)
+                                .font(Font.system(size: 60, weight: .medium))
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }
+                        
+                        Text(result.result.contains("-") ? String(result.result.dropFirst()) : result.result).multilineTextAlignment(.trailing)
+                            .foregroundStyle(.white)
+                            .font(Font.system(size: 90, weight: .medium))
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                        
+                    }
+                    .padding([.leading, .trailing], 30)
+                    .scaleEffect(x: -1, y: 1)
+                    
+                }
+                .scrollPosition($position)
+                .scrollBounceBehavior(.basedOnSize, axes: [.horizontal])
+                .fixedSize(horizontal: false, vertical: true)
+                .scaleEffect(x: -1, y: 1)
+            }
         }
     }
+        
+    
+    
     
 }
 
 struct prev: PreviewProvider {
         
-    @State static var expression: [String] = ["123", "124", "125"]
+    @State static var expression: [String] = ["-123", "124", "125"]
     @State static var position = ScrollPosition(edge: .leading)
     @State static var actions: [Action] = [.plus, .divide]
     @State static var result = MathLogic()
+    
     
     static var previews: some View {
         ZStack {
@@ -83,3 +120,5 @@ struct prev: PreviewProvider {
         }
     }
 }
+
+

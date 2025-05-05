@@ -17,7 +17,7 @@ struct ButtonGrid: View {
     
     var body: some View {
        
-        let ButtonProprety = (expression: $expression, actions: $actions, position: $position)
+        let ButtonProprety = (expression: $expression, actions: $actions, position: $position, MathLogic: $mathLogic)
         
         let deleteAction: () -> Void = {
             if actions.count < expression.count {
@@ -71,11 +71,28 @@ struct ButtonGrid: View {
             expression.append("0.")
         }
         
+        let equelAction: () -> Void = {
+            if expression.count > actions.count {
+                
+                
+                mathLogic.reload(expression: expression, actions: actions)
+                mathLogic.calculate()
+                print(mathLogic.result)
+            }
+        }
+        
         Grid(horizontalSpacing: 10, verticalSpacing: 10) {
             
             
             GridRow {
                 SpecialButton(path: "delete.left", action: deleteAction, ButtonProprety).buttonStyle(NumberButtonStyle(color: .BackButton))
+//                    .onLongPressGesture(minimumDuration: 0.5) {
+//                        while !actions.isEmpty {
+//                            expression.removeLast()
+//                            actions.removeLast()
+//                        }
+//                        expression.removeLast()
+//                    }
                 SpecialButton(path: "plus.forwardslash.minus", action: plusSlashMinusAction, ButtonProprety).buttonStyle(NumberButtonStyle(color: .BackButton))
                 ActionButton(action: .percent, ButtonProprety).buttonStyle(NumberButtonStyle(color: .BackButton))
                 ActionButton(action: .divide, ButtonProprety).buttonStyle(NumberButtonStyle(color: .ActionsButton))
@@ -108,7 +125,7 @@ struct ButtonGrid: View {
                     .buttonStyle(ZeroButtonStyle(color: .NumbersButton))
                 SpecialButton(symbol: ",", action: dotAction, ButtonProprety).buttonStyle(NumberButtonStyle(color: .NumbersButton))
                     
-                SpecialButton(path: "equal", action: {}, ButtonProprety).buttonStyle(NumberButtonStyle(color: .ActionsButton))
+                SpecialButton(path: "equal", action: equelAction, ButtonProprety).buttonStyle(NumberButtonStyle(color: .ActionsButton))
             }
         }.padding(10)
            
