@@ -22,14 +22,15 @@ struct CalculatorView: View {
     @State var actions: [Action] = []
     @State var expResult = MathLogic()
     @State var position = ScrollPosition(edge: .leading)
+    @State var isResult: Bool = false
     
     var body: some View {
         VStack(spacing: 0){
             Spacer()
             
-            TopTextView(expression: $expression, actions: $actions, position: $position, result: $expResult)
+            TopTextView(expression: $expression, actions: $actions, position: $position, mathLogic: $expResult, isResult: $isResult)
             
-            ButtonGrid(expression: $expression, actions: $actions, position: $position, mathLogic: $expResult)
+            ButtonGrid(expression: $expression, actions: $actions, position: $position, mathLogic: $expResult, isResult: $isResult)
             
         }
         .frame(minWidth: 300, maxWidth: .infinity, minHeight: 400, maxHeight: .infinity)

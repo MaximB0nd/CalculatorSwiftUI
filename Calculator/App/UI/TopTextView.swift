@@ -12,11 +12,11 @@ struct TopTextView: View {
     @Binding var expression: [String]
     @Binding var actions: [Action]
     @Binding var position: ScrollPosition
-    @Binding var result: MathLogic
+    @Binding var mathLogic: MathLogic
+    @Binding var isResult: Bool
+    
     
     var body: some View {
-        
-        let isRes = !result.result.isEmpty
         
         VStack {
             ScrollView (.horizontal, showsIndicators: false) {
@@ -32,14 +32,14 @@ struct TopTextView: View {
                                         .multilineTextAlignment(.trailing)
                                         .foregroundStyle(.white)
                                         .frame(maxWidth: .infinity, alignment: .trailing)
-                                        .font(Font.system(size: isRes ? 30 : 70, weight: .medium))
+                                        .font(Font.system(size: isResult ? 30 : 70, weight: .medium))
                                     
                                 }
                                 
                                 
                                 Text(exp.contains("-") ? String(exp.dropFirst()) : exp).multilineTextAlignment(.trailing)
                                     .foregroundStyle(.white)
-                                    .font(Font.system(size: isRes ? 30 : 90, weight: .medium))
+                                    .font(Font.system(size: isResult ? 30 : 90, weight: .medium))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                 
                             }
@@ -48,7 +48,7 @@ struct TopTextView: View {
                                     .multilineTextAlignment(.trailing)
                                     .foregroundStyle(.white)
                                     .frame(maxWidth: .infinity, alignment: .trailing)
-                                    .font(Font.system(size: isRes ? 30 : 70, weight: .medium))
+                                    .font(Font.system(size: isResult ? 30 : 70, weight: .medium))
                                     
                                 
                                 
@@ -71,10 +71,10 @@ struct TopTextView: View {
             
             
             
-            if isRes {
+            if isResult {
                 ScrollView (.horizontal, showsIndicators: false) {
                     HStack {
-                        if result.result.contains("-") {
+                        if mathLogic.result.contains("-") {
                             Image(systemName: "minus")
                                 .multilineTextAlignment(.trailing)
                                 .foregroundStyle(.white)
@@ -82,7 +82,7 @@ struct TopTextView: View {
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                         }
                         
-                        Text(result.result.contains("-") ? String(result.result.dropFirst()) : result.result).multilineTextAlignment(.trailing)
+                        Text(mathLogic.result.contains("-") ? String(mathLogic.result.dropFirst()) : mathLogic.result).multilineTextAlignment(.trailing)
                             .foregroundStyle(.white)
                             .font(Font.system(size: 90, weight: .medium))
                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -111,12 +111,13 @@ struct prev: PreviewProvider {
     @State static var position = ScrollPosition(edge: .leading)
     @State static var actions: [Action] = [.plus, .divide]
     @State static var result = MathLogic()
+    @State static var isResult: Bool = false
     
     
     static var previews: some View {
         ZStack {
             Rectangle().ignoresSafeArea(edges: .all)
-            TopTextView(expression: $expression, actions: $actions, position: $position, result: $result)
+            TopTextView(expression: $expression, actions: $actions, position: $position, mathLogic: $result, isResult: $isResult)
         }
     }
 }

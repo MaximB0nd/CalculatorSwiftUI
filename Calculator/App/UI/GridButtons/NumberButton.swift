@@ -16,11 +16,17 @@ struct NumberButton: View {
     @Binding var position: ScrollPosition
     @Binding var actions: [Action]
     @Binding var mathLogic: MathLogic
+    @Binding var isResult: Bool
     
     var body: some View {
         Button {
             
-            if !mathLogic.result.isEmpty { mathLogic.clear() }
+            if isResult {
+                expression.removeAll()
+                actions.removeAll()
+                mathLogic.clear()
+                isResult = false
+            }
             
             position.scrollTo(edge: .leading)
             if actions.count < expression.count {
@@ -42,12 +48,13 @@ struct NumberButton: View {
         }
     }
     
-    init(symbol: String, _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>, MathLogic: Binding<MathLogic>)) {
+    init(symbol: String, _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>, MathLogic: Binding<MathLogic>, isResult: Binding<Bool>)) {
         
         self._actions = NumberButtonProperties.actions
         self._position = NumberButtonProperties.position
         self._expression = NumberButtonProperties.expression
         self.symbol = symbol
         self._mathLogic = NumberButtonProperties.MathLogic
+        self._isResult = NumberButtonProperties.isResult
     }
 }

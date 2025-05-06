@@ -5,7 +5,7 @@
 //  Created by Максим Бондарев on 04.05.2025.
 //
 
-import Foundation
+import SwiftUI
 
 final class MathLogic {
     var expression: [String] = []
@@ -21,7 +21,7 @@ final class MathLogic {
     init () {}
     
     func clear() {
-        expression = ["0"]
+        expression.removeAll()
         actions.removeAll()
         result = ""
     }
@@ -32,11 +32,12 @@ final class MathLogic {
     }
     
     func calculate() {
-        for (_, value) in actionsPririty {
-            for i in stride(from: actions.count > 1 ? actions.count - 1 : 0, to: 0, by: -1) {
-                let action = actions[i]
-                if value.contains(action) {
-                    let num2 = expression.remove(at: i)
+        for j in stride(from: 1, through: 3, by: 1){
+            var i = 0
+            while i < actions.count {
+                if actionsPririty[j]!.contains(actions[i]) {
+                    let action = actions.remove(at: i)
+                    let num2 = expression.remove(at: i+1)
                     let num1 = expression[i]
                     guard let res = getAction(num1, num2, action) else {
                         result = "Error"
@@ -44,7 +45,15 @@ final class MathLogic {
                     }
                     expression[i] = String(res)
                 }
+                else {
+                    i += 1
+                }
             }
+        }
+        if Double(expression[0][..<expression[0].firstIndex(of: ".")!]) == Double(expression[0]){
+            result = String(Int(expression[0][..<expression[0].firstIndex(of: ".")!])!)
+        }
+        else {
             result = expression[0]
         }
     }

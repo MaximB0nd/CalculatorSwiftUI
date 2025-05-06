@@ -14,12 +14,19 @@ struct ButtonGrid: View {
     @Binding var actions: [Action]
     @Binding var position: ScrollPosition
     @Binding var mathLogic: MathLogic
+    @Binding var isResult: Bool
     
     var body: some View {
        
-        let ButtonProprety = (expression: $expression, actions: $actions, position: $position, MathLogic: $mathLogic)
+        let ButtonProprety = (expression: $expression, actions: $actions, position: $position, MathLogic: $mathLogic, isResult: $isResult)
         
         let deleteAction: () -> Void = {
+            if isResult {
+                expression = [mathLogic.result]
+                actions.removeAll()
+                mathLogic.clear()
+                isResult = false
+            }
             if actions.count < expression.count {
                 
                 expression[expression.count-1].removeLast()
@@ -37,8 +44,20 @@ struct ButtonGrid: View {
             actions.removeLast()
         }
         
-        // rewrite it to cool understanding
         let plusSlashMinusAction: () -> Void = {
+            if isResult {
+                expression = [mathLogic.result]
+                if expression[0].first == "-" {
+                expression[0].removeFirst()
+            }
+                else {
+                    expression[0] = "-" + expression[0]
+                }
+                isResult = false
+                actions.removeAll()
+                mathLogic.clear()
+                return
+            }
             if actions.count >= 1 && actions[actions.count-1] == .plus {
                 actions[actions.count-1] = .minus
                 return
@@ -56,12 +75,20 @@ struct ButtonGrid: View {
                 }
                 return
             }
-        
-        
         expression.append("-0")
         }
         
+        
         let dotAction: () -> Void = {
+            if isResult {
+                expression = [mathLogic.result]
+                actions.removeAll()
+                if !expression[0].contains(".") {
+                    expression[0] += "."
+                }
+                mathLogic.clear()
+                isResult = false
+            }
             if actions.count < expression.count {
                 if !expression[expression.count-1].contains(".") {
                     expression[expression.count-1] += "."
@@ -73,11 +100,10 @@ struct ButtonGrid: View {
         
         let equelAction: () -> Void = {
             if expression.count > actions.count {
-                
-                
-                mathLogic.reload(expression: expression, actions: actions)
+                mathLogic.reload(expression: Array(expression), actions: Array(actions))
                 mathLogic.calculate()
-                print(mathLogic.result)
+                isResult = true
+                
             }
         }
         
@@ -86,13 +112,12 @@ struct ButtonGrid: View {
             
             GridRow {
                 SpecialButton(path: "delete.left", action: deleteAction, ButtonProprety).buttonStyle(NumberButtonStyle(color: .BackButton))
-//                    .onLongPressGesture(minimumDuration: 0.5) {
-//                        while !actions.isEmpty {
-//                            expression.removeLast()
-//                            actions.removeLast()
-//                        }
-//                        expression.removeLast()
-//                    }
+                    .onLongPressGesture(minimumDuration: 0.5) {
+                        expression.removeAll()
+                        actions.removeAll()
+                    }
+                        
+                    
                 SpecialButton(path: "plus.forwardslash.minus", action: plusSlashMinusAction, ButtonProprety).buttonStyle(NumberButtonStyle(color: .BackButton))
                 ActionButton(action: .percent, ButtonProprety).buttonStyle(NumberButtonStyle(color: .BackButton))
                 ActionButton(action: .divide, ButtonProprety).buttonStyle(NumberButtonStyle(color: .ActionsButton))
@@ -140,11 +165,12 @@ struct ButtonGridPreview: PreviewProvider {
     @State static var actions: [Action] = []
     @State static var expression: [String] = ["0"]
     @State static var result = MathLogic()
+    @State static var isResult = false
     
     static var previews: some View {
         ZStack {
             Rectangle()
-            ButtonGrid(expression: $expression, actions: $actions, position: $position, mathLogic: $result)
+            ButtonGrid(expression: $expression, actions: $actions, position: $position, mathLogic: $result, isResult: $isResult)
         }.ignoresSafeArea(.all)
     }
 }

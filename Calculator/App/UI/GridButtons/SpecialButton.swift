@@ -32,7 +32,7 @@ struct SpecialButton: View {
     
     
     init (path: String = "", action: @escaping () -> Void,
-          _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>, MathLogic: Binding<MathLogic>)) {
+          _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>, MathLogic: Binding<MathLogic>, isResult: Binding<Bool>)) {
         
         self._actions = NumberButtonProperties.actions
         self._position = NumberButtonProperties.position
@@ -44,7 +44,7 @@ struct SpecialButton: View {
     }
     
     init (symbol: String = "", action: @escaping () -> Void,
-          _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>, MathLogic: Binding<MathLogic>)) {
+          _ NumberButtonProperties: (expression: Binding<[String]>, actions: Binding<[Action]>, position: Binding<ScrollPosition>, MathLogic: Binding<MathLogic>, isResult: Binding<Bool>)) {
         
         self._actions = NumberButtonProperties.actions
         self._position = NumberButtonProperties.position
